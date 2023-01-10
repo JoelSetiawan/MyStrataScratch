@@ -1,10 +1,8 @@
 import datetime as dt
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
-import sys
-import subprocess
+
 from IPython.display import display
 
 """
@@ -86,10 +84,23 @@ def find_country_with_most_companies_listed_on_forbes(data: pd.DataFrame):
 
     return country_with_most_companies_listed_on_forbes.index[0]
 
+def find_company_with_most_blank_listed_on_forbes(data: pd.DataFrame, feature_label: str):
+
+    assert(feature_label in data.columns)    
+    company_with_most_blank = data.sort_values(by=[feature_label], ascending=False)
+    display(company_with_most_blank)
+    # display((company_with_most_blank.index.tolist()[0], company_with_most_blank))
+    
+    
+    
 if __name__ == "__main__":
     forbes_global_2010_2014 = make_dataframe()
     display(forbes_global_2010_2014)
     find_country_with_most_companies_listed_on_forbes(forbes_global_2010_2014)
+    # I can make a generic method to find the country with the most of any one feature:
+
+    # Let's say that I want to figure out which companies have the highest profits listed out of the 100 companies that are in our dataset.
+    find_company_with_most_blank_listed_on_forbes(forbes_global_2010_2014, "profits")
 
     
 
